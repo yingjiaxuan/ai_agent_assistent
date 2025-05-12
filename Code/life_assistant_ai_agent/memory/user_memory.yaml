@@ -1,1 +1,26 @@
 # This file stores user memory in YAML format
+
+user_profile:
+  user_id: 1
+  name: "张三"
+  age: 24
+  gender: "男"
+  education: "本科"
+  occupation: "留学生"
+  city: "东京"
+  interests:
+    - "摄影"
+    - "篮球"
+    - "AI"
+  language: "中文"
+  register_date: "2024-06-01"
+  last_active: "2024-06-10"
+
+memory_summaries:
+  - summary_id: 20240601
+    period: "2024-05-25 ~ 2024-06-01"
+    summary: "本周主要关注实习申请，已完成Hitachi面试..."
+    created_at: "2024-06-01"
+    revised_by_user: false
+    revised_content: ""
+    revised_at: null
