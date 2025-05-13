@@ -1,6 +1,9 @@
 from agents.reminder_agent import ReminderAgent
+from dotenv import load_dotenv
+   
 
 if __name__ == "__main__":
+    load_dotenv()
     user_id = input("请输入用户ID: ")
     try:
         user_id = int(user_id)

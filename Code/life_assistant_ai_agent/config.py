@@ -7,5 +7,5 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE_PATH = os.path.join(BASE_DIR, "data", "reminders.db")
 
-# 你的API Key
-OPENAI_API_KEY = "key"
+# # 优先从环境变量读取 API Key
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")

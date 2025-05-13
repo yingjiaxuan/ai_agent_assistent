@@ -8,3 +8,4 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 env/ # 如果你有虚拟环境
+.env

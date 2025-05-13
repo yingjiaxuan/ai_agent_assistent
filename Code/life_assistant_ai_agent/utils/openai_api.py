@@ -1,9 +1,9 @@
 import openai
-from config import OPENAI_API_KEY
-
-client = openai.OpenAI(api_key=OPENAI_API_KEY)
+import os
 
 def call_openai(prompt):
+    api_key = os.getenv("OPENAI_API_KEY")
+    client = openai.OpenAI(api_key=api_key)
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
