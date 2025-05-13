@@ -9,3 +9,5 @@ __pycache__/
 .ipynb_checkpoints/
 env/ # 如果你有虚拟环境
 .env
+.idea/
+*.iml
