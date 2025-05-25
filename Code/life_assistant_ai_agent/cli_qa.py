@@ -1,21 +1,42 @@
 from agents.memory_agent import MemoryAgent
 from dotenv import load_dotenv
+import re  # 新增：用于正则校验
 
 def main():
     load_dotenv()
     print("欢迎使用命令行AI问答助手！")
-    user_id = input("请输入用户ID（默认999）: ")
-    if not user_id.strip():
-        user_id = 999
-    else:
-        user_id = int(user_id)
+    # 注释掉老代码：未校验用户ID是否为数字
+    # user_id = input("请输入用户ID（默认999）: ")
+    # if not user_id.strip():
+    #     user_id = 999
+    # else:
+    #     user_id = int(user_id)
+    # 新实现：正则校验用户ID，只能为数字
+    while True:
+        user_id = input("请输入用户ID（默认999）: ").strip()
+        if user_id == "":
+            user_id = 999
+            break
+        # if re.fullmatch(r"\\d+", user_id):
+        if re.fullmatch(r"\d+", user_id):
+            user_id = int(user_id)
+            break
+        else:
+            print("用户ID只能为数字，请重新输入。")
     agent = MemoryAgent(user_id)
     print(f"已载入用户{user_id}，当前对话组ID: {agent.group_id}")
     print("输入问题开始对话，输入 /new 新对话，/switch 切换对话组，/history [页码] 查看历史，/exit 退出。\n")
+    allowed_cmds = ["/new", "/switch", "/history", "/exit"]
     while True:
         user_input = input("你：")
         if user_input.strip() == "":
             continue
+        # 校验命令是否合法（只对以/开头的命令）
+        if user_input.startswith("/"):
+            cmd = user_input.strip().split()[0]
+            if cmd not in allowed_cmds:
+                print(f"无效命令：{cmd}，请重新输入。可用命令：{', '.join(allowed_cmds)}")
+                continue
         if user_input.startswith("/exit"):
             agent.save()
             print("已保存并安全退出。再见！")
