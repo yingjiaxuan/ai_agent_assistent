@@ -25,8 +25,12 @@ def main():
             print("用户ID只能为数字，请重新输入。")
     agent = MemoryAgent(user_id)
     print(f"已载入用户{user_id}，当前对话组ID: {agent.group_id}")
-    print("输入问题开始对话，输入 /new 新对话，/switch 切换对话组，/history [页码] 查看历史，/exit 退出。\n")
-    allowed_cmds = ["/new", "/switch", "/history", "/exit"]
+    # 检查是否有历史对话组
+    groups = agent.list_conversations()
+    if not groups:
+        print("【提示】当前用户暂无历史对话记录，请使用 /new 命令开启新的对话组。")
+    print("输入问题开始对话，输入 /new 新对话，/switch 切换对话组，/history [页码] 查看历史，/exit 退出，/summarize 生成记忆摘要，/profile 管理用户画像。\n")
+    allowed_cmds = ["/new", "/switch", "/history", "/exit", "/summarize", "/profile"]
     while True:
         user_input = input("你：")
         if user_input.strip() == "":
@@ -63,6 +67,19 @@ def main():
             if len(parts) > 1 and parts[1].isdigit():
                 page = int(parts[1])
             agent.show_history(page)
+        elif user_input.startswith("/summarize"):
+            # 手动生成记忆摘要
+            agent.summarize_user_memory()
+            print("记忆摘要已生成并写入数据库和YAML。")
+        elif user_input.startswith("/profile"):
+            # 用户画像管理
+            mode = input("选择模式：1-手动录入 2-自动生成（默认2）: ")
+            if mode.strip() == "1":
+                agent.manual_profile_entry()
+                print("用户画像已手动录入并写入数据库和YAML。")
+            else:
+                agent.auto_generate_profile()
+                print("用户画像已自动生成并写入数据库和YAML。")
         else:
             answer = agent.ask(user_input)
             print("AI：", answer)
