@@ -1,194 +1,243 @@
-# This file stores user memory in YAML format
-
 users:
-  - user_profile:
-      user_id: 1
-      name: "张三"
-      age: 24
-      gender: "男"
-      education: "本科"
-      occupation: "留学生"
-      city: "东京"
-      interests: ["摄影", "篮球", "AI"]
-      language: ["中文", "日语"]
-      nationality: "中国"
-      register_date: "2024-06-01"
-      last_active: "2024-06-10"
-    memory_summaries:
-      - summary_id: 20240602
-        period: "2024-05-25 ~ 2024-06-01"
-        summary: "张三近期关注东京活动和天气，喜欢户外和社交。"
-        created_at: "2024-06-02"
-        revised_by_user: false
-        revised_content: ""
-        revised_at: null
-    reminders:
-      - reminder_id: 1
-        title: "医院预约"
-        description: "体检预约，东京医院"
-        due_date: "2024-06-10"
-        priority: "高"
-        status: "待办"
-        created_at: "2024-06-01"
-        updated_at: "2024-06-01"
-      - reminder_id: 2
-        title: "论文提交"
-        description: "毕业论文初稿提交"
-        due_date: "2024-06-12"
-        priority: "中"
-        status: "待办"
-        created_at: "2024-06-02"
-        updated_at: "2024-06-02"
-      - reminder_id: 3
-        title: "朋友聚会"
-        description: "周五晚餐"
-        due_date: "2024-06-14"
-        priority: "低"
-        status: "待办"
-        created_at: "2024-06-03"
-        updated_at: "2024-06-03"
-    conversations:
-      - group_id: 1
-        messages:
-          - role: user
-            content: "我想找东京附近的樱花活动"
-            timestamp: "2024-06-01 10:00:00"
-            tags: ["活动", "樱花"]
-          - role: assistant
-            content: "推荐你去北大赏樱节，本周末开放。"
-            timestamp: "2024-06-01 10:00:05"
-            tags: ["推荐", "活动"]
-          - role: user
-            content: "需要提前预约吗？"
-            timestamp: "2024-06-01 10:01:00"
-            tags: ["活动", "预约"]
-          - role: assistant
-            content: "建议提前在官网预约，现场人较多。"
-            timestamp: "2024-06-01 10:01:10"
-            tags: ["预约", "建议"]
-          - role: user
-            content: "好的，谢谢！"
-            timestamp: "2024-06-01 10:02:00"
-            tags: ["感谢"]
-          - role: assistant
-            content: "不客气，祝你玩得开心！"
-            timestamp: "2024-06-01 10:02:05"
-            tags: ["祝福"]
-      - group_id: 2
-        messages:
-          - role: user
-            content: "帮我查明天东京的天气"
-            timestamp: "2024-06-02 09:00:00"
-            tags: ["天气", "东京"]
-          - role: assistant
-            content: "明天东京多云，气温22-28度。"
-            timestamp: "2024-06-02 09:00:05"
-            tags: ["天气", "播报"]
-          - role: user
-            content: "适合户外活动吗？"
-            timestamp: "2024-06-02 09:01:00"
-            tags: ["天气", "建议"]
-          - role: assistant
-            content: "适合，建议带伞以防阵雨。"
-            timestamp: "2024-06-02 09:01:10"
-            tags: ["建议", "天气"]
-          - role: user
-            content: "明白了，谢谢！"
-            timestamp: "2024-06-02 09:02:00"
-            tags: ["感谢"]
-          - role: assistant
-            content: "祝你有美好的一天！"
-            timestamp: "2024-06-02 09:02:05"
-            tags: ["祝福"]
-
-  - user_profile:
-      user_id: 2
-      name: "李四"
-      age: 27
-      gender: "女"
-      education: "硕士"
-      occupation: "工程师"
-      city: "大阪"
-      interests: ["旅行", "美食", "编程"]
-      language: ["中文", "日语"]
-      nationality: "中国"
-      register_date: "2024-05-15"
-      last_active: "2024-06-09"
-    memory_summaries:
-      - summary_id: 20240604
-        period: "2024-05-25 ~ 2024-06-01"
-        summary: "李四关注美食节和签证续签，喜欢尝试新事物。"
-        created_at: "2024-06-04"
-        revised_by_user: false
-        revised_content: ""
-        revised_at: null
-    reminders:
-      - reminder_id: 4
-        title: "签证续签"
-        description: "在留卡更新"
-        due_date: "2024-06-20"
-        priority: "高"
-        status: "待办"
-        created_at: "2024-06-01"
-        updated_at: "2024-06-01"
-      - reminder_id: 5
-        title: "美食节报名"
-        description: "报名参加大阪美食节"
-        due_date: "2024-06-09"
-        priority: "中"
-        status: "待办"
-        created_at: "2024-06-02"
-        updated_at: "2024-06-02"
-    conversations:
-      - group_id: 1
-        messages:
-          - role: user
-            content: "大阪最近有什么美食节吗？"
-            timestamp: "2024-06-03 11:00:00"
-            tags: ["美食", "活动"]
-          - role: assistant
-            content: "大阪美食节将在6月10日举行，推荐参加。"
-            timestamp: "2024-06-03 11:00:10"
-            tags: ["推荐", "美食"]
-          - role: user
-            content: "需要门票吗？"
-            timestamp: "2024-06-03 11:01:00"
-            tags: ["门票", "活动"]
-          - role: assistant
-            content: "部分展区需要门票，官网可购买。"
-            timestamp: "2024-06-03 11:01:10"
-            tags: ["门票", "建议"]
-          - role: user
-            content: "有推荐的展区吗？"
-            timestamp: "2024-06-03 11:02:00"
-            tags: ["推荐", "展区"]
-          - role: assistant
-            content: "推荐尝试本地小吃展区，口碑很好。"
-            timestamp: "2024-06-03 11:02:10"
-            tags: ["推荐", "美食"]
-      - group_id: 2
-        messages:
-          - role: user
-            content: "我想了解签证续签流程"
-            timestamp: "2024-06-04 14:00:00"
-            tags: ["签证", "续签"]
-          - role: assistant
-            content: "请准备护照、在留卡和照片，前往出入国管理局办理。"
-            timestamp: "2024-06-04 14:00:10"
-            tags: ["签证", "流程"]
-          - role: user
-            content: "办理时间一般多久？"
-            timestamp: "2024-06-04 14:01:00"
-            tags: ["签证", "时间"]
-          - role: assistant
-            content: "通常需要2-3周，建议提前准备。"
-            timestamp: "2024-06-04 14:01:10"
-            tags: ["建议", "时间"]
-          - role: user
-            content: "谢谢你的提醒！"
-            timestamp: "2024-06-04 14:02:00"
-            tags: ["感谢"]
-          - role: assistant
-            content: "不客气，祝你顺利续签！"
-            timestamp: "2024-06-04 14:02:10"
-            tags: ["祝福"]
+- conversations:
+  - group_id: 1
+    messages:
+    - content: 我想找东京附近的樱花活动
+      role: user
+      tags:
+      - 活动
+      - 樱花
+      timestamp: '2024-06-01 10:00:00'
+    - content: 推荐你去北大赏樱节，本周末开放。
+      role: assistant
+      tags:
+      - 推荐
+      - 活动
+      timestamp: '2024-06-01 10:00:05'
+    - content: 需要提前预约吗？
+      role: user
+      tags:
+      - 活动
+      - 预约
+      timestamp: '2024-06-01 10:01:00'
+    - content: 建议提前在官网预约，现场人较多。
+      role: assistant
+      tags:
+      - 预约
+      - 建议
+      timestamp: '2024-06-01 10:01:10'
+    - content: 好的，谢谢！
+      role: user
+      tags:
+      - 感谢
+      timestamp: '2024-06-01 10:02:00'
+    - content: 不客气，祝你玩得开心！
+      role: assistant
+      tags:
+      - 祝福
+      timestamp: '2024-06-01 10:02:05'
+  - group_id: 2
+    messages:
+    - content: 帮我查明天东京的天气
+      role: user
+      tags:
+      - 天气
+      - 东京
+      timestamp: '2024-06-02 09:00:00'
+    - content: 明天东京多云，气温22-28度。
+      role: assistant
+      tags:
+      - 天气
+      - 播报
+      timestamp: '2024-06-02 09:00:05'
+    - content: 适合户外活动吗？
+      role: user
+      tags:
+      - 天气
+      - 建议
+      timestamp: '2024-06-02 09:01:00'
+    - content: 适合，建议带伞以防阵雨。
+      role: assistant
+      tags:
+      - 建议
+      - 天气
+      timestamp: '2024-06-02 09:01:10'
+    - content: 明白了，谢谢！
+      role: user
+      tags:
+      - 感谢
+      timestamp: '2024-06-02 09:02:00'
+    - content: 祝你有美好的一天！
+      role: assistant
+      tags:
+      - 祝福
+      timestamp: '2024-06-02 09:02:05'
+  memory_summaries:
+  - created_at: '2024-06-02'
+    period: 2024-05-25 ~ 2024-06-01
+    revised_at: null
+    revised_by_user: false
+    revised_content: ''
+    summary: 张三近期关注东京活动和天气，喜欢户外和社交。
+    summary_id: 20240602
+  reminders:
+  - created_at: '2024-06-01'
+    description: 体检预约，东京医院
+    due_date: '2024-06-10'
+    priority: 高
+    reminder_id: 1
+    status: 待办
+    title: 医院预约
+    updated_at: '2024-06-01'
+  - created_at: '2024-06-02'
+    description: 毕业论文初稿提交
+    due_date: '2024-06-12'
+    priority: 中
+    reminder_id: 2
+    status: 待办
+    title: 论文提交
+    updated_at: '2024-06-02'
+  - created_at: '2024-06-03'
+    description: 周五晚餐
+    due_date: '2024-06-14'
+    priority: 低
+    reminder_id: 3
+    status: 待办
+    title: 朋友聚会
+    updated_at: '2024-06-03'
+  user_profile:
+    age: 24
+    city: 东京
+    education: 本科
+    gender: 男
+    interests:
+    - 摄影
+    - 篮球
+    - AI
+    language:
+    - 中文
+    - 日语
+    last_active: '2024-06-10'
+    name: 张三
+    nationality: 中国
+    occupation: 留学生
+    register_date: '2024-06-01'
+    user_id: 1
+- conversations:
+  - group_id: 1
+    messages:
+    - content: 大阪最近有什么美食节吗？
+      role: user
+      tags:
+      - 美食
+      - 活动
+      timestamp: '2024-06-03 11:00:00'
+    - content: 大阪美食节将在6月10日举行，推荐参加。
+      role: assistant
+      tags:
+      - 推荐
+      - 美食
+      timestamp: '2024-06-03 11:00:10'
+    - content: 需要门票吗？
+      role: user
+      tags:
+      - 门票
+      - 活动
+      timestamp: '2024-06-03 11:01:00'
+    - content: 部分展区需要门票，官网可购买。
+      role: assistant
+      tags:
+      - 门票
+      - 建议
+      timestamp: '2024-06-03 11:01:10'
+    - content: 有推荐的展区吗？
+      role: user
+      tags:
+      - 推荐
+      - 展区
+      timestamp: '2024-06-03 11:02:00'
+    - content: 推荐尝试本地小吃展区，口碑很好。
+      role: assistant
+      tags:
+      - 推荐
+      - 美食
+      timestamp: '2024-06-03 11:02:10'
+  - group_id: 2
+    messages:
+    - content: 我想了解签证续签流程
+      role: user
+      tags:
+      - 签证
+      - 续签
+      timestamp: '2024-06-04 14:00:00'
+    - content: 请准备护照、在留卡和照片，前往出入国管理局办理。
+      role: assistant
+      tags:
+      - 签证
+      - 流程
+      timestamp: '2024-06-04 14:00:10'
+    - content: 办理时间一般多久？
+      role: user
+      tags:
+      - 签证
+      - 时间
+      timestamp: '2024-06-04 14:01:00'
+    - content: 通常需要2-3周，建议提前准备。
+      role: assistant
+      tags:
+      - 建议
+      - 时间
+      timestamp: '2024-06-04 14:01:10'
+    - content: 谢谢你的提醒！
+      role: user
+      tags:
+      - 感谢
+      timestamp: '2024-06-04 14:02:00'
+    - content: 不客气，祝你顺利续签！
+      role: assistant
+      tags:
+      - 祝福
+      timestamp: '2024-06-04 14:02:10'
+  memory_summaries:
+  - created_at: '2024-06-04'
+    period: 2024-05-25 ~ 2024-06-01
+    revised_at: null
+    revised_by_user: false
+    revised_content: ''
+    summary: 李四关注美食节和签证续签，喜欢尝试新事物。
+    summary_id: 20240604
+  reminders:
+  - created_at: '2024-06-01'
+    description: 在留卡更新
+    due_date: '2024-06-20'
+    priority: 高
+    reminder_id: 4
+    status: 待办
+    title: 签证续签
+    updated_at: '2024-06-01'
+  - created_at: '2024-06-02'
+    description: 报名参加大阪美食节
+    due_date: '2024-06-09'
+    priority: 中
+    reminder_id: 5
+    status: 待办
+    title: 美食节报名
+    updated_at: '2024-06-02'
+  user_profile:
+    age: 27
+    city: 大阪
+    education: 硕士
+    gender: 女
+    interests:
+    - 旅行
+    - 美食
+    - 编程
+    language:
+    - 中文
+    - 日语
+    last_active: '2024-06-09'
+    name: 李四
+    nationality: 中国
+    occupation: 工程师
+    register_date: '2024-05-15'
+    user_id: 2
