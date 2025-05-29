@@ -57,22 +57,22 @@ class MemoryAgent:
                     break
 
     def _profile_to_str(self, profile):
-        return f"姓名：{profile.get('name','')}，年龄：{profile.get('age','')}，性别：{profile.get('gender','')}，学历：{profile.get('education','')}，职业：{profile.get('occupation','')}，兴趣：{','.join(profile.get('interests',[]))}，语言：{','.join(profile.get('language',[]))}，国籍：{profile.get('nationality','')}"
+        return f"Name: {profile.get('name','')}, Age: {profile.get('age','')}, Gender: {profile.get('gender','')}, Education: {profile.get('education','')}, Occupation: {profile.get('occupation','')}, Interests: {','.join(profile.get('interests',[]))}, Language: {','.join(profile.get('language',[]))}, Nationality: {profile.get('nationality','')}"
 
     def _init_messages(self, is_new=True):
         self.messages = []
         if is_new:
-            self.messages.append({"role": "system", "content": "你是一个生活助理，善于总结和建议。"})
+            self.messages.append({"role": "system", "content": "You are a life assistant, good at summarizing and giving advice."})
             if self.user_profile:
-                self.messages.append({"role": "user", "content": f"[用户画像] {self.user_profile}"})
+                self.messages.append({"role": "user", "content": f"[User Profile] {self.user_profile}"})
             if self.memory_summary:
-                self.messages.append({"role": "user", "content": f"[记忆摘要] {self.memory_summary}"})
+                self.messages.append({"role": "user", "content": f"[Memory Summary] {self.memory_summary}"})
 
     def _register_signal(self):
         def handler(sig, frame):
-            print("\n检测到退出信号，正在保存当前对话...")
+            print("\nExit signal detected, saving current conversation...")
             self.save()
-            print("保存完成，安全退出。")
+            print("Save complete. Exiting safely.")
             exit(0)
         signal.signal(signal.SIGINT, handler)
         signal.signal(signal.SIGTERM, handler)
@@ -88,7 +88,7 @@ class MemoryAgent:
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         cursor = self.conn.cursor()
         for msg in self.messages[self._saved_message_count:]:
-            if msg["role"] in ("user", "assistant") and not (isinstance(msg["content"], str) and (msg["content"].startswith("[用户画像]") or msg["content"].startswith("[记忆摘要]"))):
+            if msg["role"] in ("user", "assistant") and not (isinstance(msg["content"], str) and (msg["content"].startswith("[User Profile]") or msg["content"].startswith("[Memory Summary]"))):
                 cursor.execute(
                     "INSERT INTO conversations (user_id, group_id, role, content, timestamp, tags) VALUES (?, ?, ?, ?, ?, ?) ",
                     (self.user_id, self.group_id, msg["role"], msg["content"], now, "")
@@ -129,14 +129,14 @@ class MemoryAgent:
         分页显示对话历史，当前为正序分页（旧→新）。如需倒序分页，将下方注释取消。
         :param page: 页码，从1开始
         """
-        msgs = [m for m in self.messages if m["role"] in ("user", "assistant") and not (isinstance(m["content"], str) and (m["content"].startswith("[用户画像]") or m["content"].startswith("[记忆摘要]")))]
+        msgs = [m for m in self.messages if m["role"] in ("user", "assistant") and not (isinstance(m["content"], str) and (m["content"].startswith("[User Profile]") or m["content"].startswith("[Memory Summary]")))]
         # msgs = list(reversed(msgs))  # 如需倒序分页（新→旧），取消本行注释
         total = len(msgs)
         start = (page-1)*self.page_size
         end = min(start+self.page_size, total)
         for idx, m in enumerate(msgs[start:end], start=start+1):
             print(f"[{idx}] {m['role']}: {m['content']}")
-        print(f"-- 第{page}页，共{(total-1)//self.page_size+1}页 --")
+        print(f"-- Page {page} of {(total-1)//self.page_size+1} --")
 
     def switch_conversation(self, group_id):
         """
@@ -189,7 +189,7 @@ class MemoryAgent:
         rows = cursor.fetchall()
         history = "\n".join([r[0] for r in reversed(rows)])
         # 生成prompt
-        prompt = f"""你是一个面向在日留学生/务工人员的智能生活助理，请根据以下对话历史，提炼出用户近期的主要关注点、兴趣爱好、困惑、行动计划、生活习惯、情绪状态等，生成一份结构化的记忆摘要。请结合日本生活、学习、工作、签证、社交、健康、出行等常见主题，尽量细致总结。如果某项无法从对话中推断，请输出NULL。\n\n对话历史如下：\n{history}\n\n请严格只输出如下 JSON 格式，不要输出任何解释、代码块标记或其它内容。例如：\n{{\n  \"主要关注点\": \"...\",\n  \"兴趣爱好\": \"...\",\n  ...\n}}"""
+        prompt = f"""You are a smart life assistant for Japanese students/workers, please summarize the main concerns, interests, problems, action plans, habits, emotional states of the user based on the following conversation history. Please combine Japanese daily life, study, work, visa, social, health, travel, etc. themes, and try to summarize as detailed as possible. If something cannot be inferred from the conversation, please output NULL.\n\nConversation history:\n{history}\n\nPlease strictly output the following JSON format, without any explanation, code block mark or other content. For example:\n{{\n  \"Main Concerns\": \"...\",\n  \"Interests\": \"...\",\n  ...\n}}"""
         summary_text = call_openai(prompt)
         summary_dict = parse_memory_summary_from_llm(summary_text)
         now = datetime.now().strftime("%Y-%m-%d")
@@ -222,15 +222,15 @@ class MemoryAgent:
 
     def manual_profile_entry(self):
         """
-        命令行交互手动录入用户画像，写入数据库和YAML
+        Manual entry of user profile via command line, save to database and YAML
         """
         profile = {}
         for field in ["name", "age", "gender", "education", "occupation", "city", "interests", "language", "nationality"]:
-            value = input(f"请输入{field}（可留空，兴趣/语言用逗号分隔）: ")
+            value = input(f"Please enter {field} (leave blank if unknown, use comma to separate interests/languages): ")
             if field in ["interests", "language"]:
                 value = [v.strip() for v in value.split(",") if v.strip()] if value else []
             profile[field] = value or None
-        # 写入数据库
+        # Write to database
         cursor = self.conn.cursor()
         cursor.execute(
             "UPDATE users SET name=?, age=?, gender=?, education=?, occupation=?, city=?, interests=?, language=?, nationality=? WHERE id=?",
@@ -241,7 +241,7 @@ class MemoryAgent:
             )
         )
         self.conn.commit()
-        # 写入YAML
+        # Write to YAML
         memory_path = Path(__file__).parent.parent / "memory" / "user_memory.yaml"
         if memory_path.exists():
             with open(memory_path, "r", encoding="utf-8") as f:
@@ -263,16 +263,16 @@ class MemoryAgent:
         )
         rows = cursor.fetchall()
         history = "\n".join([r[0] for r in reversed(rows)])
-        prompt = f"""你是一个面向在日留学生/务工人员的智能生活助理，请根据以下对话历史，推断并结构化输出该用户的基本画像信息。每个字段如无法推断请输出NULL。输出为JSON格式。\n\n字段包括：\n- 姓名\n- 年龄\n- 性别\n- 学历\n- 职业\n- 城市\n- 兴趣（列表）\n- 语言（列表）\n- 国籍\n- 联系方式\n- 常用App（如微信、Line等）\n- 生活偏好（如饮食、作息、运动等）\n\n对话历史如下：\n{history}\n\n请严格只输出如下 JSON 格式，不要输出任何解释、代码块标记或其它内容。例如：\n{{\n  \"姓名\": \"张三\",\n  \"年龄\": 24,\n  ...\n}}"""
+        prompt = f"""You are a smart life assistant for Japanese students/workers, please infer and structure output the basic profile information of the user based on the following conversation history. Each field will output NULL if it cannot be inferred. Output in JSON format.\n\nFields include:\n- Name\n- Age\n- Gender\n- Education\n- Occupation\n- City\n- Interests (List)\n- Language (List)\n- Nationality\n- Contact Information\n- Common Apps (e.g., WeChat, Line, etc.)\n- Lifestyle Preferences (e.g., Diet, Routine, Exercise, etc.)\n\nConversation history:\n{history}\n\nPlease strictly output the following JSON format, without any explanation, code block mark or other content. For example:\n{{\n  \"Name\": \"Zhang San\",\n  \"Age\": 24,\n  ...\n}}"""
         profile_json = call_openai(prompt)
-        print("[DEBUG] LLM返回内容：", profile_json)  # Debug用
+        print("[DEBUG] LLM returned content:", profile_json)  # Debug use
         try:
             profile_dict = parse_user_profile_from_llm(profile_json)
         except Exception as e:
-            print("用户画像生成失败，LLM返回内容无法解析为JSON。请重试或检查Prompt。")
-            print("原始返回：", profile_json)
+            print("Failed to generate user profile, LLM returned content cannot be parsed as JSON. Please try again or check the Prompt.")
+            print("Original return:", profile_json)
             return
-        # 兜底处理：优先用 LLM 结果，如为 None，则尝试从 YAML 读取原有 user_profile 字段，如仍无则用默认值
+        # Fallback processing: Use LLM results first, if None, then try to read original user_profile from YAML, if still None, use default values
         memory_path = Path(__file__).parent.parent / "memory" / "user_memory.yaml"
         yaml_profile = {}
         if memory_path.exists():
@@ -282,10 +282,10 @@ class MemoryAgent:
                 if u["user_profile"]["user_id"] == self.user_id:
                     yaml_profile = u["user_profile"]
                     break
-        # 姓名、年龄等 NOT NULL 字段兜底逻辑
-        name = profile_dict.get("name") or yaml_profile.get("name") or "未知"
+        # Fallback logic for NOT NULL fields
+        name = profile_dict.get("name") or yaml_profile.get("name") or "Unknown"
         age = profile_dict.get("age") or yaml_profile.get("age") or 0
-        # ... 其它字段可按需兜底 ...
+        # ... Other fields can be fallback as needed ...
         cursor.execute(
             "UPDATE users SET name=?, age=?, gender=?, education=?, occupation=?, city=?, interests=?, language=?, nationality=?, extra_information=? WHERE id=?",
             (
@@ -303,7 +303,7 @@ class MemoryAgent:
             )
         )
         self.conn.commit()
-        # 写入YAML
+        # Write to YAML
         memory_path = Path(__file__).parent.parent / "memory" / "user_memory.yaml"
         if memory_path.exists():
             with open(memory_path, "r", encoding="utf-8") as f:
