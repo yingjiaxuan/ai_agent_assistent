@@ -1,4 +1,3 @@
-
 # 🇯🇵 AI Agent Web App：在日生活助手 DEMO1.0
 
 ## 🧠 项目目标
@@ -28,8 +27,8 @@
 
 | 智能阶段 | 功能说明                                     | 示例                                       |
 |----------|----------------------------------------------|--------------------------------------------|
-| Observe  | 记录事务 + 标注类别                          | 添加：“Hitachi ES 截止 5/10”              |
-| Think    | LLM 分析类别与时间，判断优先级与行动时机     | 生成：“应在5/7提交推荐信，请提前准备”     |
+| Observe  | 记录事务 + 标注类别                          | 添加："Hitachi ES 截止 5/10"              |
+| Think    | LLM 分析类别与时间，判断优先级与行动时机     | 生成："应在5/7提交推荐信，请提前准备"     |
 | Act      | 主动提醒 + 输出优化日程                      | 今日提醒：结合 3 条信息，建议先完成 ES     |
 
 ---
@@ -53,9 +52,9 @@
 
 | 智能阶段 | 功能说明                                         | 示例                                       |
 |----------|--------------------------------------------------|--------------------------------------------|
-| Observe  | 记录提问与回答内容摘要                           | 问：“我要怎么写实习邮件？”               |
-| Think    | 结合记忆信息（如专业、学校）增强 Prompt          | 回答：“你的信息化学背景可强调建模经验”   |
-| Act      | 输出个性化回答；可定期生成记忆文档 + 自动提醒回顾 | “记得更新你在 Hitachi 面试的进展”         |
+| Observe  | 记录提问与回答内容摘要                           | 问："我要怎么写实习邮件？"               |
+| Think    | 结合记忆信息（如专业、学校）增强 Prompt          | 回答："你的信息化学背景可强调建模经验"   |
+| Act      | 输出个性化回答；可定期生成记忆文档 + 自动提醒回顾 | "记得更新你在 Hitachi 面试的进展"         |
 
 ---
 
@@ -72,7 +71,7 @@
 |----------|----------------------------------------------------|----------------------------------------------|
 | Observe  | 感知位置、天气、节日、用户日程                     | 地点：札幌，天气：晴，黄金周临近             |
 | Think    | 判断用户空闲时间、节日机会                         | 判断周末无任务，推断适合短途活动             |
-| Act      | 生成推荐：“北大赏樱节本周开放，适合周末参加”      | 并附上地图/交通/活动链接                     |
+| Act      | 生成推荐："北大赏樱节本周开放，适合周末参加"      | 并附上地图/交通/活动链接                     |
 
 ---
 
@@ -119,3 +118,189 @@
 ## ✍️ 可写入简历描述
 
 > Built a personalized AI Agent web app to support international student life in Japan. The system integrates daily reminder planning, contextual Q&A with memory-augmented LLM, and local service recommendations. Enabled agent-based behavior by embedding GPT-3.5 for task prioritization, knowledge summarization, and lifestyle suggestions based on personal context.
+
+## 📂 推荐项目目录结构与主要脚本说明
+
+以下为建议的项目目录结构及主要.py脚本的注释模板，便于后续开发和维护：
+
+```
+life_assistant_ai_agent/
+│
+├── app.py
+├── README.md
+│
+├── agents/
+│   ├── __init__.py
+│   ├── reminder_agent.py         # AI提醒助手核心逻辑
+│   ├── memory_agent.py           # LLM问答+记忆体核心逻辑
+│   └── life_agent.py             # 本地服务推荐助手核心逻辑
+│
+├── utils/
+│   ├── __init__.py
+│   ├── api_utils.py              # 第三方API调用工具
+│   ├── time_utils.py             # 时间/日期处理工具
+│   └── text_utils.py             # 文本处理、Prompt等工具
+│
+├── data/
+│   ├── mock_tasks.json           # 示例/测试用的mock数据
+│   └── database.db               # SQLite数据库（可后续生成）
+│
+├── memory/
+│   ├── __init__.py
+│   ├── user_profile.py           # 用户画像/信息管理
+│   ├── memory_store.py           # 记忆体存储与检索
+│   └── memory_docs/              # 记忆文档（如Markdown/YAML）
+│
+├── assets/
+│   └── (images, icons, etc.)
+│
+├── config.py                     # 配置文件（API Key、路径等）
+└── tests/
+    ├── __init__.py
+    ├── test_reminder_agent.py
+    ├── test_memory_agent.py
+    └── test_life_agent.py
+```
+
+---
+
+### 主要.py脚本模板（含注释）
+
+#### agents/reminder_agent.py
+```python
+"""
+AI提醒助手：负责任务的记录、分类、优先级分析与提醒策略。
+"""
+class ReminderAgent:
+    def __init__(self):
+        pass
+    def add_task(self, task):
+        """添加新任务"""
+        pass
+    def analyze_tasks(self):
+        """分析任务优先级与提醒时机"""
+        pass
+    def get_reminders(self):
+        """生成今日/近期提醒"""
+        pass
+```
+
+#### agents/memory_agent.py
+```python
+"""
+LLM问答+记忆体：负责智能问答、个性化记忆管理与调用。
+"""
+class MemoryAgent:
+    def __init__(self):
+        pass
+    def record_interaction(self, question, answer):
+        """记录用户问答内容摘要"""
+        pass
+    def update_user_profile(self, info):
+        """更新用户画像信息"""
+        pass
+    def personalized_reply(self, question):
+        """结合记忆体生成个性化回答"""
+        pass
+```
+
+#### agents/life_agent.py
+```python
+"""
+本地服务推荐助手：结合时间、地理、日程，推送本地生活建议。
+"""
+class LifeAgent:
+    def __init__(self):
+        pass
+    def fetch_local_info(self, location):
+        """获取本地天气、节日等信息"""
+        pass
+    def recommend_activity(self, user_schedule):
+        """根据用户日程推荐活动"""
+        pass
+```
+
+#### utils/api_utils.py
+```python
+"""
+第三方API调用工具，如天气、节日等。
+"""
+def get_weather(location):
+    pass
+def get_holiday(date, country='JP'):
+    pass
+```
+
+#### utils/time_utils.py
+```python
+"""
+时间/日期处理工具。
+"""
+def parse_date(date_str):
+    pass
+def get_today():
+    pass
+```
+
+#### utils/text_utils.py
+```python
+"""
+文本处理、Prompt工程等工具。
+"""
+def summarize_text(text):
+    pass
+def generate_prompt(context):
+    pass
+```
+
+#### memory/user_profile.py
+```python
+"""
+用户画像信息管理。
+"""
+class UserProfile:
+    def __init__(self):
+        pass
+    def update_profile(self, info):
+        pass
+    def get_profile(self):
+        pass
+```
+
+#### memory/memory_store.py
+```python
+"""
+记忆体存储与检索。
+"""
+class MemoryStore:
+    def __init__(self):
+        pass
+    def save_memory(self, memory):
+        pass
+    def retrieve_memory(self, query):
+        pass
+```
+
+#### config.py
+```python
+"""
+全局配置文件：API Key、数据库路径等。
+"""
+OPENAI_API_KEY = "your-openai-key"
+DATABASE_PATH = "data/database.db"
+```
+
+#### tests/test_reminder_agent.py
+```python
+import unittest
+from agents.reminder_agent import ReminderAgent
+class TestReminderAgent(unittest.TestCase):
+    def test_add_task(self):
+        agent = ReminderAgent()
+        # 测试添加任务
+        self.assertIsNone(agent.add_task("Test Task"))
+if __name__ == "__main__":
+    unittest.main()
+```
+
+---
