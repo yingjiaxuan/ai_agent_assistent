@@ -29,12 +29,16 @@ class ReminderAgent:
             items.append(f"- {r['title']}（{r['due_date']}，优先级：{r['priority']}）：{r['description']}")
         reminders_text = "\n".join(items)
         prompt = f"""
-你是一个生活助理，请根据以下日程和待办事项，帮我总结出今天/本周最重要的事项，并按优先级排序，给出简明的提醒建议。
+你是一个生活助理，请根据以下日程和待办事项，帮我总结出今天/本周最重要的事项，并按优先级排序，给出简明的提醒建议。输出中英双语版本。
 日程和待办事项如下：
 {reminders_text}
 请输出格式：
+中文版本：
 1. 事项A（优先级：高）- 简要说明
 2. 事项B（优先级：中）- 简要说明
+English Version：
+1. Task A (Priority: High) - Brief description
+2. Task B (Priority: Medium) - Brief description
 """
         return prompt
 
