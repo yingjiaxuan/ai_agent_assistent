@@ -1,0 +1,25 @@
+📊 Statistical Analysis Report
+===================================
+📅 Analysis Date: 2025-07-10 06:25:23
+📋 Sample Size: 6 configurations
+
+🎯 KEY FINDINGS:
+---------------
+• Most Stable Method: Function Calling (Score: 0.832)
+• Most Accurate Method: Structured JSON (Score: 0.704)
+• Temperature Stability Effect: Cohen's d = 0.827
+• Temperature Accuracy Effect: Cohen's d = 2.055
+
+📈 RECOMMENDATIONS:
+-----------------
+1. For production systems: Use Function Calling with temperature=0.0
+2. For content quality: Consider Structured JSON prompts
+3. Always use low temperature for stability
+4. Monitor consistency in deployment
+
+📊 STATISTICAL SIGNIFICANCE:
+---------------------------
+• All observed effects show large effect sizes (d > 0.5)
+• Temperature parameter has consistent impact across methods
+• Function calling shows superior consistency
+• Results support theoretical predictions

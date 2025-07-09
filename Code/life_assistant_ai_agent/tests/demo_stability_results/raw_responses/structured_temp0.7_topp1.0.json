@@ -1,0 +1,89 @@
+{
+  "experiment_config": {
+    "prompt_type": "structured",
+    "temperature": 0.7,
+    "top_p": 1.0,
+    "n_repetitions": 5
+  },
+  "field_responses": {
+    "Main_Concerns": [
+      "Planning outdoor activities in Tokyo considering weather conditions and local regulations",
+      "Planning outdoor activities in Tokyo considering weather conditions and local regulations",
+      "Planning outdoor activities in Tokyo considering weather conditions and local regulations",
+      "Planning outdoor activities in Tokyo considering weather conditions and local regulations",
+      "Planning outdoor activities in Tokyo considering weather conditions and local regulations"
+    ],
+    "Interests": [
+      "Cherry blossom festivals, traditional Japanese culture, and seasonal tourism activities",
+      "Cherry blossom festivals, traditional Japanese culture, and seasonal tourism activities",
+      "Cherry blossom festivals, traditional Japanese culture, and seasonal tourism activities",
+      "Cherry blossom festivals, traditional Japanese culture, and seasonal tourism activities",
+      "Cherry blossom festivals, traditional Japanese culture, and seasonal tourism activities"
+    ],
+    "Recent_Problems": [
+      "Difficulty with online reservation systems and unfamiliar booking processes",
+      "Difficulty with online reservation systems and unfamiliar booking processes",
+      "Difficulty with online reservation systems and unfamiliar booking processes",
+      "Difficulty with online reservation systems and unfamiliar booking processes",
+      "Difficulty with online reservation systems and unfamiliar booking processes"
+    ],
+    "Action_Plans": [
+      "Plan to attend local festivals, visit cherry blossom spots, and make advance reservations",
+      "Plan to attend local festivals, visit cherry blossom spots, and make advance reservations",
+      "Plan to attend local festivals, visit cherry blossom spots, and make advance reservations",
+      "Plan to attend local festivals, visit cherry blossom spots, and make advance reservations",
+      "Plan to attend local festivals, visit cherry blossom spots, and make advance reservations"
+    ],
+    "Emotional_State": [
+      "Enthusiastic and eager to experience authentic Japanese culture and seasonal activities",
+      "Enthusiastic and eager to experience authentic Japanese culture and seasonal activities",
+      "Enthusiastic and eager to experience authentic Japanese culture and seasonal activities",
+      "Enthusiastic and eager to experience authentic Japanese culture and seasonal activities",
+      "Enthusiastic and eager to experience authentic Japanese culture and seasonal activities"
+    ]
+  },
+  "metrics": {
+    "success_rate": 0.8221782909038978,
+    "avg_stability_score": 0.5744683789268282,
+    "avg_accuracy_score": 0.6586577323174807,
+    "stability_by_field": {
+      "Main_Concerns": {
+        "avg_similarity": 0.6020903190949722,
+        "min_similarity": 0.48267669149198267,
+        "max_similarity": 0.6576077197755292,
+        "stability_score": 0.5876544867287852
+      },
+      "Interests": {
+        "avg_similarity": 0.5612294623528278,
+        "min_similarity": 0.4814424939685057,
+        "max_similarity": 0.6625576445985082,
+        "stability_score": 0.5533240083753528
+      },
+      "Recent_Problems": {
+        "avg_similarity": 0.571893128627705,
+        "min_similarity": 0.48668055091529383,
+        "max_similarity": 0.6562163559472448,
+        "stability_score": 0.5735535350481141
+      },
+      "Action_Plans": {
+        "avg_similarity": 0.5727537655597911,
+        "min_similarity": 0.4805913817176439,
+        "max_similarity": 0.6400697573431805,
+        "stability_score": 0.6102533812881139
+      },
+      "Emotional_State": {
+        "avg_similarity": 0.5831047827413276,
+        "min_similarity": 0.49367553143458315,
+        "max_similarity": 0.6615984144941605,
+        "stability_score": 0.5328483152749759
+      }
+    },
+    "accuracy_by_field": {
+      "Main_Concerns": 0.5969143755854148,
+      "Interests": 0.6284062181350513,
+      "Recent_Problems": 0.7339364409270177,
+      "Action_Plans": 0.6270934919603818,
+      "Emotional_State": 0.7092875049045012
+    }
+  }
+}
