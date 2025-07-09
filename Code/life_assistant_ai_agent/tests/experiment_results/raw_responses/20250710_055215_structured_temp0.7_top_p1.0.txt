@@ -1,0 +1,13 @@
+Experiment: 20250710_055215
+Prompt Type: structured
+Temperature: 0.7
+Top P: 1.0
+Timestamp: 2025-07-10T05:53:29.162450
+============================================================
+{
+  "Main_Concerns": "Finding activities and events around Tokyo, communication preferences",
+  "Interests": "Cherry blossom events, outdoor activities",
+  "Recent_Problems": "Uncertainty about event reservations and weather conditions",
+  "Action_Plans": "Attend the cherry blossom festival, check weather forecasts, communicate in English",
+  "Emotional_State": "Curious and proactive in planning activities"
+}
