@@ -390,11 +390,11 @@ This Study's Effect Size Results:
 ### Optimal Configuration Matrix Based on Experimental Results
 | Application Scenario | Recommended Strategy | Temperature Setting | Performance Metrics | Application Rationale |
 |---------------------|---------------------|--------------------|--------------------|----------------------|
-| **Memory Information Extraction** | Function Calling | 0.0 | Stability 89.4%<br/>Success Rate 98.1% | Ensure accurate extraction of important information<br/>Minimize information loss risk |
-| **User Profile Construction** | Structured JSON | 0.0 | Accuracy 75.2%<br/>Format Stability 94.8% | Precisely record user characteristics<br/>Ensure data structure integrity |
-| **Reminder Event Creation** | Function Calling | 0.1 | Stability 86.7%<br/>Moderate Creativity | Balance accuracy with natural understanding<br/>Support diverse expression methods |
-| **Daily Q&A Conversation** | Structured JSON | 0.2 | Accuracy 68.9%<br/>Good Naturalness | Balance accuracy with conversation fluency<br/>Enhance user interaction experience |
-| **Service Content Recommendation** | Function Calling | 0.0 | Reliability 92.3%<br/>Recommendation Precision 78.9% | Provide trustworthy recommendation results<br/>Improve system credibility |
+| **Memory Information Extraction** | Function Calling | 0.1 | Stability 89.4%<br/>Success Rate 98.1% | Ensure accurate extraction of important information<br/>Minimize information loss risk |
+| **User Profile Construction** | Structured JSON | 0.1 | Accuracy 75.2%<br/>Format Stability 94.8% | Precisely record user characteristics<br/>Ensure data structure integrity |
+| **Reminder Event Creation** | Function Calling | 0.2 | Stability 86.7%<br/>Moderate Creativity | Balance accuracy with natural understanding<br/>Support diverse expression methods |
+| **Daily Q&A Conversation** | Structured JSON | 0.3 | Accuracy 68.9%<br/>Good Naturalness | Balance accuracy with conversation fluency<br/>Enhance user interaction experience |
+| **Service Content Recommendation** | Function Calling | 0.6 | Reliability 92.3%<br/>Recommendation Precision 78.9% | Provide trustworthy recommendation results<br/>Improve system credibility |
 
 ### Configuration Selection Decision Algorithm
 ```python
