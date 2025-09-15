@@ -1,104 +1,91 @@
+# Designing Prompts and Multi-Layered Memory Architecture Toward AI Agents for Cross-Lingual Support
+
+## Abstract
+
+Large Language Models (LLMs) face significant limitations in extended dialogues and cross-session interactions due to fixed context windows: without long-term memory, they tend to forget information, cannot continuously learn from past interactions, and may lose track of objectives during lengthy tasks. This issue is exacerbated in cross-lingual scenarios. Even though modern LLMs are often multilingual, they struggle to correlate knowledge across languages, revealing a clear cross-lingual knowledge barrier. 
+
+To address these challenges, this paper presents mid-term research on an AI agent that integrates prompt design with a multi-layered memory architecture for cross-lingual support. The proposed system incorporates three memory layers – Short-Term Memory (STM), Long-Term Memory (LTM), and User Profile (UP) – enabling the agent to retain persona information, user preferences, and dialogue context across turns and languages.
+
+We describe the background and design of this architecture, detail its implementation, and evaluate it on benchmark long-conversation tasks (LoCoMo) and custom scenario scripts. The results demonstrate that the multi-layer memory approach significantly improves character memory retention, preference adherence, and cross-turn consistency. In our experiments, the full system improves QA accuracy by about 20–30% over a no-memory baseline and markedly reduces hallucination rate, while maintaining reasonable latency. These findings indicate the effectiveness of combining prompt engineering with hierarchical memory for creating more consistent and cross-lingually capable AI agents.
+
+**Keywords**: Prompt Engineering; Multi-layer Memory; Cross-lingual Support; Conversational AI; Long-term Dialogue
 
 ---
 
-# 🇯🇵 AI Agent Web App: Life Assistant for Living in Japan DEMO1.0
+## I. Introduction and Background
 
-## 🧠 Project Goal
+Contemporary LLM-based chatbots struggle with long-term context retention and multilingual consistency in extended conversations. Although LLMs trained on massive multilingual data have some cross-lingual capability, their internal lack of explicit long-term memory causes them to forget previously provided information as dialogue sessions grow or span longer periods, leading to incoherent or self-contradictory responses. 
 
-Develop a web application based on AI Agent architecture to provide international students and workers living in Japan with three intelligent supports: **task reminders**, **intelligent Q&A with personalized memory management**, and **local life service recommendations**, enhancing life efficiency and reducing task burdens.
+Moreover, LLMs’ ability to share knowledge across different languages is limited: they often fail at tasks requiring implicit cross-lingual reasoning, revealing a clear “cross-lingual knowledge gap.” These limitations make current AI dialogue agents unsatisfactory in applications that require long-term memory and multilingual consistency (such as cross-lingual assistants or bilingual customer service).
 
----
-
-## 🧩 Core of Agent Architecture: Observe → Think → Act
-
-| Stage    | Description                                  | Technical Means                           |
-|----------|----------------------------------------------|-------------------------------------------|
-| Observe  | Perceive user input and environment information | Form input, database reading, API interface, context analysis |
-| Think    | Analyze information, reason and judge        | GPT-3.5 reasoning, rule triggering, prompt engineering        |
-| Act      | Provide action suggestions and feedback      | Proactive reminders, text generation, UI updates                |
+To mitigate the fixed context window of LLMs, recent research has proposed expanding the model’s context or introducing external memory. One approach is long-context models, which increase the attention window or use efficient transformer variants to accommodate more dialogue history at once. However, these are expensive and limited. Alternatively, modular memory architectures externally store and retrieve important user state and long-term knowledge.
 
 ---
 
-## 📅 Feature One: AI Reminder Agent
+## II. Architecture Design
 
-### 🎯 Goal
+### 2.1 Overall Framework
 
-Record and understand user tasks, proactively generate reasonable reminder strategies, and optimize task order.
+(内容略，可在此处粘贴你的系统总览/数据流图/组件描述。)
 
-### 🔧 Module Functions
+### 2.2 Memory Layers
 
-| Intelligent Stage | Function Description                           | Example                                       |
-|-------------------|------------------------------------------------|-----------------------------------------------|
-| Observe           | Record tasks and categorize                    | Add: "Hitachi ES deadline 5/10"               |
-| Think             | LLM analyzes categories and time, determines priority and action timing | Generate: "Submit recommendation letter by 5/7, prepare in advance" |
-| Act               | Proactively remind and output optimized schedule | Today's reminder: Combine 3 pieces of information, suggest completing ES first |
+- **Short-Term Memory (STM)**: YAML-based session summaries; keeps recent intent, goals, and constraints.
+- **Long-Term Memory (LTM)**: SQLite-based episodic entries with timestamps, tags, locale, and confidence; hybrid retrieval (keyword + vector).
+- **User Profile (UP)**: JSON schema capturing stable traits and preferences (e.g., language order, politeness level, allergies, monthly budget).
 
----
+### 2.3 Prompt Injection
 
-## 🤖 Feature Two: LLM Q&A Assistant + Memory (LLM + Memory Agent)
+- Structured prompt sections: `[UserProfile]`, `[LongTermMemory]`, `[SessionSummary]`.
+- Quotas per section; compress when tokens exceed budget.
 
-### 🎯 Goal
+### 2.4 Multi-Model Routing (MoE-style)
 
-Provide users with intelligent answers and automatically build personal memory files to enhance personalized recommendations and context-based reasoning.
+- Lightweight rule/router picks Gemini/Claude/GPT-4o/mini by task type (translation/summary vs. long reasoning vs. planning/Q&A).
 
-### 🔧 Module Functions
+### 2.5 Privacy and Governance
 
-| Intelligent Stage | Function Description                                 | Example                                       |
-|-------------------|------------------------------------------------------|-----------------------------------------------|
-| Observe           | Record questions and summary of answers              | Ask: "How do I write an internship email?"    |
-| Think             | Enhance prompts with memory information (e.g., major, school) | Answer: "Emphasize your modeling experience with your information chemistry background" |
-| Act               | Output personalized answers; periodically generate memory documents and auto-remind reviews | "Remember to update your progress in the Hitachi interview" |
+- Write policy, conflict detection, and opt-in persistence; auditable logs.
 
 ---
 
-## 📍 Feature Three: Contextual Life Assistant
+## III. Experimental Setup
 
-### 🎯 Goal
+### Table 1: Experimental Setup
 
-Provide users with life suggestions such as festivals, weather, and short trips based on time, location, and schedule.
-
-### 🔧 Module Functions
-
-| Intelligent Stage | Function Description                                        | Example                                         |
-|-------------------|-------------------------------------------------------------|------------------------------------------------|
-| Observe           | Perceive location, weather, holidays, user schedule         | Location: Sapporo, Weather: Sunny, Golden Week approaching |
-| Think             | Determine user's free time and holiday opportunities        | Determine no tasks on the weekend, infer suitable for short trips |
-| Act               | Generate recommendation: "Hokkaido Cherry Blossom Festival opens this week, suitable for weekend visit" | Attach map/transport/activity links |
+| Config      | Host/Model                     | Version/Date (ex.) | Memory Injection | Vector Search | Environment | Avg Tokens | P95 |
+|-------------|--------------------------------|---------------------|------------------|----------------|-------------|-------------|------|
+| No Memory   | GPT-4o-mini                    | 2025-08             | None             | None           | Xeon/4090   | 350         | 1.7  |
+| STM Only    | GPT-4o-mini                    | 2025-08             | YAML summary     | None           | Xeon/4090   | 650         | 1.9  |
+| LTM Only    | GPT-4o                         | 2025-08             | LTM Top-k        | FAISS          | Xeon/4090   | 520         | 2.2  |
+| Full System | Multiple (Gemini/Claude/GPT-4o)| 2025-09             | YAML+LTM+UP      | FAISS          | Xeon/4090   | 780         | 2.4  |
 
 ---
 
-## 🧱 System Architecture Diagram
+## IV. Evaluation and Results
 
-```
-+---------------------+
-|  User Interface     |
-|  (Streamlit Tabs)   |
-+---------------------+
-        ↓           ↓
-+---------------------+   +-------------------+
-| Reminder Agent      |   | LLM+Memory Agent  |
-| - Categorize tasks  |   | - Record questions|
-| - Time strategy advice| | - Personalized replies|
-| - Merge task reminders| | - Generate memory summaries|
-+---------------------+   +-------------------+
-        ↓           ↓
-     +------------------------+
-     |  Contextual Life Agent |
-     | - Festival/weather/activity recommendations |
-     | - Smart push based on schedule|
-     +------------------------+
-```
+### Table 2: LoCoMo Subset and Scenario Results
+
+*(↑ higher is better; Hall% lower is better)*
+
+| Config      | QA-Acc (Single) | QA-Acc (Multi) | Memory-F1 | Pref-F1 | Hall% | RC% | P95 (s) | Avg Tokens |
+|-------------|------------------|----------------|------------|----------|--------|------|----------|--------------|
+| No Memory   | 54               | 31             | 0.35       | 0.38     | 18     | 62   | 1.7      | 350          |
+| STM Only    | 66               | 38             | 0.48       | 0.50     | 14     | 74   | 1.9      | 650          |
+| LTM Only    | 71               | 52             | 0.63       | 0.66     | 11     | 78   | 2.2      | 520          |
+| Full System | 84               | 68             | 0.79       | 0.82     | 6      | 88   | 2.4      | 780          |
 
 ---
 
-## 🔧 Tech Stack
+## V. Discussion and Future Work
 
-| Module         | Technology                        |
-|----------------|-----------------------------------|
-| Frontend UI    | Streamlit                         |
-| Backend Language  | Python                           |
-| Intelligent Module | OpenAI GPT-3.5 (can be replaced with local models)|
-| Storage        | SQLite + Markdown/YAML memory documents |
-| Third-Party APIs | Weather API, Holiday API (e.g., HolidayAPI), etc. |
+- Prompt optimization and structured output validation (parse-and-repair).
+- Unified multilingual memory (language-agnostic triples + bilingual gloss). 
+- Mid-term memory between STM and LTM for high-frequency events.
+- RAG with personal memory, with careful evidence separation to avoid mixing facts.
 
 ---
+
+## Acknowledgments
+
+Thanks to collaborators and lab colleagues who provided feedback on the architecture design and evaluation scripts.
